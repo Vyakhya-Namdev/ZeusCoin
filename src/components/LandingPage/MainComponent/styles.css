@@ -1,0 +1,50 @@
+.flex-info{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 0.5rem 3rem;
+}
+
+.zeuscoin-heading, .real-time-heading{
+    font-size: 6rem;
+    margin: 0;
+}
+
+.zeuscoin-heading{
+    color: var(--primary-text);
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: var(--primary-text);
+}
+
+.zeuscoin-heading:hover{
+    color: var(--primary-bg);
+    -webkit-text-stroke-color: var(--primary-text);
+    transition: all 0.3s;
+}
+.real-time-heading{
+    color: var(--primary-accent);
+}
+
+.info-text{
+    font-size: 1rem;
+    color: var(--light-gray);
+}
+
+.btn-flex{
+    display: flex;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.share-btn {
+    background-color: var(--primary-bg);
+    color: #007bff;
+    border: 2px solid #007bff;
+}
+  
+.share-btn:hover {
+    background-color: #007bff;
+    color: white;
+}

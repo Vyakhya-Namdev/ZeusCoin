@@ -1,0 +1,117 @@
+.grid-container{
+    width: 300px;
+    height: 300px;
+    gap: 1.5px;
+    background-color: var(--secondary-darkgrey);
+    border: 2px solid var(--secondary-darkgrey);
+    border-radius: 0.75rem;
+    opacity: 0.80;
+}
+
+.grid-container:hover{
+    border-color: rgb(39, 205, 39);
+    transition: all 0.3s;
+}
+
+.grid-container-red:hover{
+    border-color: var(--secondary-red);
+    transition: all 0.3s;
+}
+
+.info-flex{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem;
+}
+
+.coin-logo{
+    height: 3.5rem;
+    width: 3.5rem;
+
+}
+
+.name-col{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.coin-symbol{
+    text-transform: uppercase;
+    font-weight: 550;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.coin-name{
+    color: var(--gray-text);
+    text-transform: capitalize;
+    font-weight: light;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.chip-flex{
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-items: center;
+    margin: 0.25rem 0.25rem;
+}
+
+.price-chip{
+    border: 2px solid rgb(39, 205, 39);
+    border-radius: 1rem;
+    padding: 0.35rem 0.65rem;
+    text-align: center;
+    font-weight: 450;
+    color: rgb(39, 205, 39);
+    font-size: 0.95rem;
+    min-width: 64px;
+    margin: 0.75rem;
+}
+
+.price-chip:hover, .arrow-chip:hover{
+    background-color: rgb(39, 205, 39);
+    color: var(--primary-text);
+    transition: all 0.3s;
+}
+
+.chip-red{
+    border: 2px solid var(--secondary-red) !important;
+    color: var(--secondary-red) !important;
+}
+
+.chip-red:hover{
+    background-color: var(--secondary-red) !important;
+    color: var(--primary-text) !important;
+    transition: all 0.3s;
+}
+
+.arrow-chip{
+    border: 2px solid rgb(39, 205, 39);
+    border-radius: 50%;
+    width: 2rem !important;
+    height: 2rem !important;
+    display: flex;
+    text-align: center;
+    color: rgb(39, 205, 39);
+    font-size: 0.34;
+}
+
+.info-container{
+    margin: 1.4rem;
+}
+
+.coin-price{
+    color: rgb(39, 205, 39);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.total-volume{
+    color: var(--gray-text);
+    font-size: 1rem;
+    font-weight: 500;
+}

@@ -1,13 +1,82 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root {
+  --primary-bg: #0D1321; /*Background */
+  --primary-text: #FFFFFF;  /*Main Text */
+  --primary-accent: #00FF99;  /*Buttons & Highlights */
+  --primary-highlight: #00D8FF;  /*Highlights & Text */
+  --secondary-darkgrey: #1e2b44;  /*Icons & Decorations */
+  --secondary-red: #E74C3C; /* Alert & Important Icons */
+  --secondary-yellow: #F1C40F; /*Bitcoin Icon & Highlights */
+  --gray-text: #AAB1C0; /* Secondary Text */
+  --light-gray: #d6d4d4e3; /* UI Elements */
+  --search-btn: #d6d4d415;
+  
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html{
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--primary-bg);
+  color: var(--neon-green);
+  height: 200vh;
+  font-family: "Inter", sans-serif;
+}
+
+::selection{
+  background-color: var(--neon-green);
+  color: var(--primary-text);
+}
+
+
+::-webkit-scrollbar{
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: var(--primary-text);
+  border-radius: 3rem;
+}
+
+::-webkit-scrollbar-thumb{
+  background-color: var(--primary-bg);
+}
+
+
+a{
+  color: var(--white);
+  text-decoration: none;
+}
+
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+}
+
+.grey-wrapper{
+  display: block;
+  width: 90%;
+  background-color: var(--search-btn);
+  margin: 1.5rem auto;
+  border-radius: 0.8rem;
+  padding: 0rem 1rem;
+}
+
+.grey-wrapper h2, p{
+  margin: 1rem 0rem;
+}
+
+.coins-days-flex{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 1.5rem;
+  gap: 2rem;
 }
