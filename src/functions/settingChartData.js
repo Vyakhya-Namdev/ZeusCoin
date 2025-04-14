@@ -10,9 +10,8 @@ export const settingChartData = (setChartData, prices1, prices2 = null) => {
           data: prices1?.map((data) => data[1]),
           borderWidth: 1,
           fill: false,
-          backgroundColor: "#ecd26c",
           tension: 0.25,
-          borderColor: "var(--secondary-yellow)",
+          borderColor: "#F1C40F", // Yellow for Crypto 1
           pointRadius: 0,
           yAxisID: "crypto1",
         },
@@ -22,7 +21,7 @@ export const settingChartData = (setChartData, prices1, prices2 = null) => {
           borderWidth: 1,
           fill: false,
           tension: 0.25,
-          borderColor: "#61c96f",
+          borderColor: "#61c96f", // Green for Crypto 2
           pointRadius: 0,
           yAxisID: "crypto2",
         },
@@ -37,9 +36,9 @@ export const settingChartData = (setChartData, prices1, prices2 = null) => {
           data: prices1?.map((data) => data[1]),
           borderWidth: 1,
           fill: true,
-          backgroundColor: "#ecd26c",
+          backgroundColor: "#ecd26c", // Background color (yellow) for single crypto
           tension: 0.25,
-          borderColor: "var(--secondary-yellow)",
+          borderColor: "var(--secondary-yellow)", // Yellow border for single crypto
           pointRadius: 0,
           yAxisID: "crypto1",
         },

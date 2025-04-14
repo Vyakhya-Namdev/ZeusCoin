@@ -80,3 +80,32 @@ img {
   margin: 1.5rem;
   gap: 2rem;
 }
+
+/* Scoped CSS for the ComparePage chart */
+.compare-page-chart-container {
+  width: 100%;
+  height: 500px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  height: 100%;            
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.compare-page-chart-container canvas {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.comparison-section{
+  pointer-events: none;
+}
+

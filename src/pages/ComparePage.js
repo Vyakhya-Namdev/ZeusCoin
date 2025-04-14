@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Header from '../components/common/Header';
-import SelectCoins from '../components/Compare/SelectCoins';
-import SelectDays from '../components/Coin/SelectDays';
-import List from '../components/Dashboard/List';
-import { getCoinData } from '../functions/getCoinData';
-import { getCoinPrices } from '../functions/getCoinPrices';
+import React, { useEffect, useState } from "react";
+import Header from "../components/common/Header";
+import SelectCoins from "../components/Compare/SelectCoins";
+import SelectDays from "../components/Coin/SelectDays";
+import List from "../components/Dashboard/List";
+import { getCoinData } from "../functions/getCoinData";
+import { getCoinPrices } from "../functions/getCoinPrices";
+import CoinInfo from "../components/Coin/CoinInfo";
+import { settingChartData } from "../functions/settingChartData";
+import LineChart from "../components/Coin/LineChart"; // Importing the chart component
 
 function ComparePage() {
   const [crypto1, setCrypto1] = useState("bitcoin");
@@ -16,6 +19,7 @@ function ComparePage() {
   const [crypto2Prices, setCrypto2Prices] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [priceType, setPriceType] = useState("prices");
+  const [chartData, setChartData] = useState({});
 
   const handleDaysChange = (event) => {
     setDays(event.target.value);
@@ -32,6 +36,7 @@ function ComparePage() {
       if (isCoin2) {
         setCrypto2(coin);
         setCrypto2Data(formattedData);
+        fetchData();
       } else {
         setCrypto1(coin);
         setCrypto1Data(formattedData);
@@ -43,7 +48,6 @@ function ComparePage() {
     }
   };
 
-  // Helper function to format coin data
   const formatCoinData = (data) => ({
     name: data.name,
     symbol: data.symbol?.toUpperCase(),
@@ -52,43 +56,44 @@ function ComparePage() {
     price_change_percentage_24h: data.market_data?.price_change_percentage_24h,
     market_cap: data.market_data?.market_cap?.usd,
     total_volume: data.market_data?.total_volume?.usd,
-    description: data.description,
+    desc: data.description?.en || "No description available.",
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const [data1, data2, prices1, prices2] = await Promise.all([
-          getCoinData(crypto1),
-          getCoinData(crypto2),
-          getCoinPrices(crypto1, days, priceType),
-          getCoinPrices(crypto2, days, priceType)
-        ]);
-
-        setCrypto1Data(formatCoinData(data1));
-        setCrypto2Data(formatCoinData(data2));
-
-        if (Array.isArray(prices1) && prices1.length > 0) {
-          setCrypto1Prices(prices1);
-        }
-        if (Array.isArray(prices2) && prices2.length > 0) {
-          setCrypto2Prices(prices2);
-        }
-      } catch (error) {
-        console.error("Error in comparison data fetch:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
   }, [crypto1, crypto2, days, priceType]);
+
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const [data1, data2, prices1, prices2] = await Promise.all([
+        getCoinData(crypto1),
+        getCoinData(crypto2),
+        getCoinPrices(crypto1, days, priceType),
+        getCoinPrices(crypto2, days, priceType),
+      ]);
+
+      setCrypto1Data(formatCoinData(data1));
+      setCrypto2Data(formatCoinData(data2));
+      settingChartData(setChartData, prices1, prices2);
+
+      if (Array.isArray(prices1) && prices1.length > 0) {
+        setCrypto1Prices(prices1);
+      }
+      if (Array.isArray(prices2) && prices2.length > 0) {
+        setCrypto2Prices(prices2);
+      }
+    } catch (error) {
+      console.error("Error in comparison data fetch:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div>
       <Header />
-      <div className='coins-days-flex'>
+      <div className="coins-days-flex">
         <SelectCoins
           crypto1={crypto1}
           crypto2={crypto2}
@@ -122,8 +127,18 @@ function ComparePage() {
               </tbody>
             </table>
           </div>
+
+          {/* Chart rendering */}
+          {!isLoading && chartData && chartData.datasets && (
+            <div className="chart-wrapper">
+              <LineChart chartData={chartData} />
+            </div>
+          )}
         </>
       )}
+
+      <CoinInfo heading={crypto1Data.name} desc={crypto1Data.desc} />
+      <CoinInfo heading={crypto2Data.name} desc={crypto2Data.desc} />
     </div>
   );
 }
