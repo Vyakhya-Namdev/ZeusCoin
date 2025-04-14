@@ -40,12 +40,10 @@
     display: none;
 }
 
-/* For right-aligned td like price or volume */
 .td-right-align {
     text-align: right;
 }
 
-/* Responsive styles */
 @media only screen and (max-width: 1100px) {
     .td-icon {
         display: none;

@@ -1,15 +1,27 @@
 import axios from "axios";
 
-export const get100Coins = () => {
-  return axios
-    .get(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=inr&order=market_cap_desc&per_page=100&page=1&sparkline=false"
-    )
-    .then((response) => {
-      return response.data;
-    })
-    .catch((error) => {
-      console.log("ERROR>>>", error);
-      return []; 
+const coinGeckoMainAPI = axios.create({
+  baseURL: "https://api.coingecko.com/api/v3",
+  params: {
+    x_cg_demo_api_key: process.env.REACT_APP_COINGECKO_API_KEY_MAIN
+  },
+  timeout: 5000
+});
+
+export const get100Coins = async () => {
+  try {
+    const response = await coinGeckoMainAPI.get("/coins/markets", {
+      params: {
+        vs_currency: "usd",
+        order: "market_cap_desc",
+        per_page: 100,
+        page: 1,
+        sparkline: false
+      }
     });
+    return response.data;
+  } catch (error) {
+    console.error("Main API Error:", error.message);
+    throw error;
+  }
 };

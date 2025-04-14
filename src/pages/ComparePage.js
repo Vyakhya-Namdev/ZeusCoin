@@ -2,11 +2,9 @@ import React, { useEffect, useState } from 'react';
 import Header from '../components/common/Header';
 import SelectCoins from '../components/Compare/SelectCoins';
 import SelectDays from '../components/Coin/SelectDays';
-import CoinInfo from '../components/Coin/CoinInfo';
+import List from '../components/Dashboard/List';
 import { getCoinData } from '../functions/getCoinData';
 import { getCoinPrices } from '../functions/getCoinPrices';
-import { coinObject } from '../functions/convertNumbers';
-import List from '../components/Dashboard/List'; 
 
 function ComparePage() {
   const [crypto1, setCrypto1] = useState("bitcoin");
@@ -27,48 +25,65 @@ function ComparePage() {
     const coin = event.target.value;
     setIsLoading(true);
 
-    if (isCoin2) {
-      setCrypto2(coin);
+    try {
       const data = await getCoinData(coin);
-      coinObject(setCrypto2Data, data);
-    } else {
-      setCrypto1(coin);
-      const data = await getCoinData(coin);
-      coinObject(setCrypto1Data, data);
+      const formattedData = formatCoinData(data);
+
+      if (isCoin2) {
+        setCrypto2(coin);
+        setCrypto2Data(formattedData);
+      } else {
+        setCrypto1(coin);
+        setCrypto1Data(formattedData);
+      }
+    } catch (error) {
+      console.error("Error fetching coin data:", error);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  // Helper function to format coin data
+  const formatCoinData = (data) => ({
+    name: data.name,
+    symbol: data.symbol?.toUpperCase(),
+    image: data.image?.large,
+    current_price: data.market_data?.current_price?.usd,
+    price_change_percentage_24h: data.market_data?.price_change_percentage_24h,
+    market_cap: data.market_data?.market_cap?.usd,
+    total_volume: data.market_data?.total_volume?.usd,
+    description: data.description,
+  });
 
   useEffect(() => {
-    getData();
+    const fetchData = async () => {
+      setIsLoading(true);
+      try {
+        const [data1, data2, prices1, prices2] = await Promise.all([
+          getCoinData(crypto1),
+          getCoinData(crypto2),
+          getCoinPrices(crypto1, days, priceType),
+          getCoinPrices(crypto2, days, priceType)
+        ]);
+
+        setCrypto1Data(formatCoinData(data1));
+        setCrypto2Data(formatCoinData(data2));
+
+        if (Array.isArray(prices1) && prices1.length > 0) {
+          setCrypto1Prices(prices1);
+        }
+        if (Array.isArray(prices2) && prices2.length > 0) {
+          setCrypto2Prices(prices2);
+        }
+      } catch (error) {
+        console.error("Error in comparison data fetch:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
   }, [crypto1, crypto2, days, priceType]);
-
-  const getData = async () => {
-    setIsLoading(true);
-
-    const data1 = await getCoinData(crypto1);
-    const data2 = await getCoinData(crypto2);
-
-    if (!data1 || !data2) {
-      console.error("Failed to fetch coin data");
-      setIsLoading(false);
-      return;
-    }
-
-    setCrypto1Data(data1);
-    setCrypto2Data(data2);
-
-    const prices1 = await getCoinPrices(crypto1, days, priceType);
-    const prices2 = await getCoinPrices(crypto2, days, priceType);
-
-    if (Array.isArray(prices1) && prices1.length > 0 && Array.isArray(prices2) && prices2.length > 0) {
-      setCrypto1Prices(prices1);
-      setCrypto2Prices(prices2);
-    } else {
-      console.error("Invalid or empty price data");
-    }
-
-    setIsLoading(false);
-  };
 
   return (
     <div>
@@ -78,28 +93,37 @@ function ComparePage() {
           crypto1={crypto1}
           crypto2={crypto2}
           handleCoinChange={handleCoinChange}
+          disabled={isLoading}
         />
         <SelectDays
           days={days}
           handleDaysChange={handleDaysChange}
           noPTag={true}
+          disabled={isLoading}
         />
       </div>
 
-      <table className="list-table">
-        <tbody>
-          <List coin={crypto1Data}/>
-        </tbody>
-      </table>
+      {isLoading ? (
+        <div className="loading-indicator">Loading comparison data...</div>
+      ) : (
+        <>
+          <div className="comparison-section">
+            <table className="list-table">
+              <tbody>
+                <List coin={crypto1Data} />
+              </tbody>
+            </table>
+          </div>
 
-      <table className="list-table">
-        <tbody>
-          <List coin={crypto2Data} /> 
-        </tbody>
-      </table>
-
-      <CoinInfo heading={crypto1Data.name} desc={crypto1Data.desc} />
-      <CoinInfo heading={crypto2Data.name} desc={crypto2Data.desc} />
+          <div className="comparison-section">
+            <table className="list-table">
+              <tbody>
+                <List coin={crypto2Data} />
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
     </div>
   );
 }
