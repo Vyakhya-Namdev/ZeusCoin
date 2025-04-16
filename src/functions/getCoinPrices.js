@@ -18,6 +18,11 @@ export const getCoinPrices = async (id, days, priceType) => {
     }
 
     const response = await coinGeckoChartAPI.get(`/coins/${id}/market_chart`, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Credentials': 'true',
+      },
       params: {
         vs_currency: "usd",
         days,

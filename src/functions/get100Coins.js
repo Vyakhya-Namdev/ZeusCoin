@@ -11,6 +11,11 @@ const coinGeckoMainAPI = axios.create({
 export const get100Coins = async () => {
   try {
     const response = await coinGeckoMainAPI.get("/coins/markets", {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Accept': 'application/json',
+        'Access-Control-Allow-Credentials': 'true',
+      },
       params: {
         vs_currency: "usd",
         order: "market_cap_desc",

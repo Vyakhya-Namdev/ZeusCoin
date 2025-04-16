@@ -2,6 +2,11 @@ import axios from "axios";
 
 const coinGeckoDataAPI = axios.create({
   baseURL: "https://api.coingecko.com/api/v3",
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+    'Accept': 'application/json',
+    'Access-Control-Allow-Credentials': 'true',
+  },
   params: {
     x_cg_demo_api_key: process.env.REACT_APP_COINGECKO_API_KEY_DATA
   },
