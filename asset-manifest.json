@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/ZeusCoin/static/css/main.c0fa6e69.css",
+    "main.js": "/ZeusCoin/static/js/main.9b6c89ca.js",
+    "index.html": "/ZeusCoin/index.html",
+    "main.c0fa6e69.css.map": "/ZeusCoin/static/css/main.c0fa6e69.css.map",
+    "main.9b6c89ca.js.map": "/ZeusCoin/static/js/main.9b6c89ca.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c0fa6e69.css",
+    "static/js/main.9b6c89ca.js"
+  ]
+}
