@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/ZeusCoin" element={<Home />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/coin/:id" element={<CoinPage />} />
         <Route path="/compare" element={<ComparePage />} />
