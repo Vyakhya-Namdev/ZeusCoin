@@ -6,7 +6,7 @@ Stay updated with **live cryptocurrency data**! This project fetches and display
 
 ## 🔍 Features
 
-- ✅ Real-time prices of **100+ cryptocurrencies**
+- ✅ Real-time prices of **100 cryptocurrencies**
 - 📈 Historical comparison between any two coins
 - 🌐 Uses a public API for fetching live data
 - 🧠 Easy-to-understand UI with powerful data presentation
